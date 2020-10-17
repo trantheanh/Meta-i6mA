@@ -35,7 +35,7 @@ def dense_block(units):
 
 def build_vgg(vocab_size):
     keras.backend.clear_session()
-    emb_dim = 1024
+    emb_dim = 512
     l_input = keras.layers.Input(shape=(None,))
     imd = keras.layers.Embedding(input_dim=vocab_size, output_dim=emb_dim, mask_zero=True)(l_input)
 
@@ -53,8 +53,8 @@ def build_vgg(vocab_size):
 
     imd = keras.layers.GlobalMaxPooling1D()(imd)
 
-    imd = dense_block(units=512)(imd)
-    imd = dense_block(units=512)(imd)
+    imd = dense_block(units=256)(imd)
+    imd = dense_block(units=256)(imd)
 
     imd = keras.layers.Dense(units=1)(imd)
     output_tf = keras.layers.Activation(activation=keras.activations.sigmoid)(imd)
