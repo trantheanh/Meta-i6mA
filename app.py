@@ -9,6 +9,16 @@ from pipeline import Step
 from models.model import Model
 from predefined_model import build_vgg, build_inception
 import os
+import tensorflow as tf
+
+
+gpus = tf.config.experimental.list_physical_devices('GPU')
+if gpus:
+    try:
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
+    except RuntimeError as e:
+        print(e)
 
 
 def read_pipeline(pipeline):
@@ -25,15 +35,15 @@ def read_pipeline(pipeline):
 
 def run():
     train_pipeline = [
-        # XLSXLoader("data/Meta-6mA-datasets.xlsx", n_sheet=4, header=None),
-        # NgramsSaver(
-        #     paths=[
-        #         "data/RG-Training-datasets.csv",
-        #         "data/RG-Independent-datasets.csv",
-        #         "data/Rice-datasets.csv",
-        #         "data/Arabidopsis-datasets.csv"
-        #     ]
-        # ),
+        XLSXLoader("data/Meta-6mA-datasets.xlsx", n_sheet=4, header=None),
+        NgramsSaver(
+            paths=[
+                "data/RG-Training-datasets.csv",
+                "data/RG-Independent-datasets.csv",
+                "data/Rice-datasets.csv",
+                "data/Arabidopsis-datasets.csv"
+            ]
+        ),
         CSVLoader(
             path="data/RG-Training-datasets.csv",
             ngram=1
