@@ -53,7 +53,7 @@ class XLSXLoader(Loader):
     def run(self, *args):
         data = []
         for i in range(self.n_sheet):
-            data.append(pd.read_excel(self.path, header=self.header))
+            data.append(pd.read_excel(self.path, header=self.header, sheet_name=i))
 
         return data
 
