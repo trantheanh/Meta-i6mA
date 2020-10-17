@@ -34,8 +34,10 @@ def read_pipeline(pipeline):
 
 
 def run():
+    import shutil
+
     if os.path.isdir(os.path.join(os.getcwd(), "log")):
-        os.rmdir(os.path.join(os.getcwd(), "log"))
+        shutil.rmtree(os.path.isdir(os.path.join(os.getcwd(), "log")))
 
     train_pipeline = [
         XLSXLoader("data/Meta-6mA-datasets.xlsx", n_sheet=4, header=None),
