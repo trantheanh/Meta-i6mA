@@ -54,6 +54,7 @@ def build_vgg(vocab_size):
     imd = keras.layers.GlobalMaxPooling1D()(imd)
 
     imd = dense_block(units=256)(imd)
+    imd = keras.layers.Dropout(rate=0.2)(imd)
     imd = dense_block(units=256)(imd)
 
     imd = keras.layers.Dense(units=1)(imd)
