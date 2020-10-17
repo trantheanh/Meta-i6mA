@@ -1,6 +1,6 @@
 import tensorflow.keras as keras
 import tensorflow as tf
-from metrics import BinaryF1Score, BinaryMCC, BinaryAccuracy, BinarySensitivity, BinarySpecificity
+from models.metrics import BinaryF1Score, BinaryMCC, BinaryAccuracy, BinarySensitivity, BinarySpecificity
 
 
 batch_size = 32
