@@ -2,7 +2,7 @@ import tensorflow as tf
 import tensorflow.keras as keras
 
 from preprocessing import get_data, get_fold_idx
-from metrics import BinaryF1Score, BinaryMCC, BinaryAccuracy, BinarySensitivity, BinarySpecificity
+from models.metrics import BinaryF1Score, BinaryMCC, BinaryAccuracy, BinarySensitivity, BinarySpecificity
 from matplotlib import pyplot as plt
 import sklearn.metrics as metrics
 
