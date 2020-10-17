@@ -84,11 +84,12 @@ def run():
     model.test_set = read_pipeline(test_pipeline)
     model.fit(
         train_x,
-        train_y,
+        train_y
     )
 
-    result = model.evaluate(model.test_set[0], model.test_set[1])
-    print(result)
+    train_result = model.evaluate(train_x, train_y)
+    test_result = model.evaluate(model.test_set[0], model.test_set[1])
+    print("Train Result: {} & Test Result: ".format(train_result, test_result))
 
 
 run()
