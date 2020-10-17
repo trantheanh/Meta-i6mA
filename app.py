@@ -34,6 +34,9 @@ def read_pipeline(pipeline):
 
 
 def run():
+    if os.path.isdir(os.path.join(os.getcwd(), "log")):
+        os.rmdir(os.path.join(os.getcwd(), "log"))
+
     train_pipeline = [
         XLSXLoader("data/Meta-6mA-datasets.xlsx", n_sheet=4, header=None),
         NgramsSaver(
@@ -81,15 +84,16 @@ def run():
         Indexer(path="saved_model/RG/vocab.json")
     ]
 
-    model.test_set = read_pipeline(test_pipeline)
+    test_set = read_pipeline(test_pipeline)
     model.fit(
         train_x,
-        train_y
+        train_y,
+        validation_data=test_set
     )
 
     train_result = model.evaluate(train_x, train_y)
-    test_result = model.evaluate(model.test_set[0], model.test_set[1])
-    print("Train Result: {} & Test Result: {}".format(train_result, test_result))
+    test_result = model.evaluate(test_set[0], test_set[1])
+    print("Train Result: {} \n Test Result: {}".format(train_result, test_result))
 
 
 run()

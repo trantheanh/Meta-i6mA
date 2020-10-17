@@ -3,7 +3,7 @@ import tensorflow as tf
 from models.metrics import BinaryF1Score, BinaryMCC, BinaryAccuracy, BinarySensitivity, BinarySpecificity
 
 
-batch_size = 32
+batch_size = 64
 n_epoch = 40
 class_weight = {0: 1, 1: 1}
 lr = 0.01
@@ -58,7 +58,12 @@ class Model(object):
 
         self.callbacks["lr_decay"] = tf.keras.callbacks.LearningRateScheduler(scheduler)
 
-    def fit(self, train_x, train_y):
+    def fit(
+            self,
+            train_x,
+            train_y,
+            validation_data=None
+    ):
         self.compile()
 
         self.model.fit(
@@ -71,6 +76,7 @@ class Model(object):
                 self.callbacks["tensorboard"],
                 self.callbacks["lr_decay"]
             ],
+            validation_data=validation_data,
             shuffle=True,
             verbose=1
         )
