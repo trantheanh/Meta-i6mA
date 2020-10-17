@@ -6,7 +6,7 @@ from models.metrics import BinaryF1Score, BinaryMCC, BinaryAccuracy, BinarySensi
 batch_size = 64
 n_epoch = 40
 class_weight = {0: 1, 1: 1}
-lr = 0.01
+lr = 0.001
 
 
 class Model(object):
