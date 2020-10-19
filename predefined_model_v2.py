@@ -52,7 +52,7 @@ def build_vgg(vocab_size):
     imd = keras.layers.MaxPool1D()(imd)
 
     imd = conv_block(filters=64, kernel_size=3)(imd)   
-    #imd = conv_block(filters=64, kernel_size=3)(imd)                                                                        
+    imd = conv_block(filters=64, kernel_size=3)(imd)                                                                        
     imd = keras.layers.MaxPool1D()(imd)
 
     imd = keras.layers.GlobalMaxPooling1D()(imd)
@@ -60,7 +60,6 @@ def build_vgg(vocab_size):
     imd = dense_block(units=256)(imd)
     imd = keras.layers.Dropout(rate=0.5)(imd)
     imd = dense_block(units=256)(imd)
-    imd = keras.layers.Dropout(rate=0.2)(imd)
 
     imd = keras.layers.Dense(units=1)(imd)
     output_tf = keras.layers.Activation(activation=keras.activations.sigmoid)(imd)

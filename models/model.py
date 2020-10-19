@@ -4,9 +4,9 @@ from models.metrics import BinaryF1Score, BinaryMCC, BinaryAccuracy, BinarySensi
 
 
 batch_size = 64
-n_epoch = 40
+n_epoch = 120
 class_weight = {0: 1, 1: 1}
-lr = 0.001
+lr = 0.01
 
 
 class Model(object):
