@@ -8,7 +8,7 @@ def conv_block(filters, kernel_size):
             filters=filters,
             kernel_size=kernel_size,
             padding="same",
-            kernel_regularizer=keras.regularizers.l2(0.004),
+            kernel_regularizer=keras.regularizers.l2(0.04),
             kernel_initializer=keras.initializers.VarianceScaling(scale=2.0, mode='fan_in', distribution='normal')
         )(x)
         block = keras.layers.BatchNormalization(momentum=0.9997, scale=False)(block)
@@ -22,7 +22,7 @@ def dense_block(units):
     def block_fn(x):
         block = keras.layers.Dense(
             units=units,
-            kernel_regularizer=keras.regularizers.l2(0.004),
+            kernel_regularizer=keras.regularizers.l2(0.04),
             kernel_initializer=keras.initializers.VarianceScaling(scale=2.0, mode='fan_in', distribution='normal')
         )(x)
         block = keras.layers.BatchNormalization(momentum=0.9997, scale=False)(block)
@@ -35,7 +35,7 @@ def dense_block(units):
 
 def build_vgg(vocab_size):
     keras.backend.clear_session()
-    emb_dim = 256
+    emb_dim = 512
     l_input = keras.layers.Input(shape=(None,))
     imd = keras.layers.Embedding(input_dim=vocab_size, output_dim=emb_dim, mask_zero=True)(l_input)
 
@@ -52,15 +52,15 @@ def build_vgg(vocab_size):
     imd = keras.layers.MaxPool1D()(imd)
 
     imd = conv_block(filters=64, kernel_size=3)(imd)   
-    #imd = conv_block(filters=64, kernel_size=3)(imd)                                                                        
+    imd = conv_block(filters=64, kernel_size=3)(imd)                                                                        
     imd = keras.layers.MaxPool1D()(imd)
 
     imd = keras.layers.GlobalMaxPooling1D()(imd)
 
-    imd = dense_block(units=256)(imd)
+    imd = dense_block(units=128)(imd)
     imd = keras.layers.Dropout(rate=0.5)(imd)
-    imd = dense_block(units=256)(imd)
-    imd = keras.layers.Dropout(rate=0.2)(imd)
+    imd = dense_block(units=128)(imd)
+    imd = keras.layers.Dropout(rate=0.5)(imd)
 
     imd = keras.layers.Dense(units=1)(imd)
     output_tf = keras.layers.Activation(activation=keras.activations.sigmoid)(imd)
