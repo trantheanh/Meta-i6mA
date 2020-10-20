@@ -37,9 +37,9 @@ def build_vgg(vocab_size):
     keras.backend.clear_session()
     emb_dim = 512
     l_input = keras.layers.Input(shape=(None,))
-    imd = keras.layers.Embedding(input_dim=vocab_size, output_dim=emb_dim, mask_zero=True)(l_input)
+    l_emb = keras.layers.Embedding(input_dim=vocab_size, output_dim=emb_dim, mask_zero=True)(l_input)
 
-    imd = conv_block(filters=32, kernel_size=3)(imd)
+    imd = conv_block(filters=32, kernel_size=3)(l_emb)
     imd = conv_block(filters=32, kernel_size=3)(imd)
     imd = conv_block(filters=32, kernel_size=3)(imd)
     imd = keras.layers.MaxPool1D()(imd)
@@ -56,7 +56,7 @@ def build_vgg(vocab_size):
 
     imd = keras.layers.GlobalMaxPooling1D()(imd)
 
-    l_lstm = keras.layers.LSTM(units=128)(l_input)
+    l_lstm = keras.layers.LSTM(units=128)(l_emb)
 
     imd = keras.layers.Concatenate([imd, l_lstm])
 
