@@ -41,18 +41,17 @@ def build_vgg(vocab_size):
 
     imd = conv_block(filters=32, kernel_size=3)(imd)
     imd = conv_block(filters=32, kernel_size=3)(imd)
+    imd = conv_block(filters=32, kernel_size=3)(imd)
     imd = keras.layers.MaxPool1D()(imd)
 
     imd = conv_block(filters=64, kernel_size=3)(imd)
     imd = conv_block(filters=64, kernel_size=3)(imd)
+    imd = conv_block(filters=64, kernel_size=3)(imd)
     imd = keras.layers.MaxPool1D()(imd)
 
     imd = conv_block(filters=64, kernel_size=3)(imd)
     imd = conv_block(filters=64, kernel_size=3)(imd)
-    imd = keras.layers.MaxPool1D()(imd)
-
-    imd = conv_block(filters=64, kernel_size=3)(imd)   
-    imd = conv_block(filters=64, kernel_size=3)(imd)                                                                        
+    imd = conv_block(filters=64, kernel_size=3)(imd)
     imd = keras.layers.MaxPool1D()(imd)
 
     imd = keras.layers.GlobalMaxPooling1D()(imd)
