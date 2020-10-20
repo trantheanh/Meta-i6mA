@@ -58,7 +58,7 @@ def build_vgg(vocab_size):
 
     l_lstm = keras.layers.LSTM(units=128)(l_emb)
 
-    imd = keras.layers.Concatenate([imd, l_lstm])
+    imd = keras.layers.Concatenate()([imd, l_lstm])
 
     imd = dense_block(units=128)(imd)
     imd = keras.layers.Dropout(rate=0.5)(imd)
