@@ -14,16 +14,13 @@ class Executable:
 
 
 class Step(Executable):
-    def execute(self, prev_result=None):
+    def execute(self, _input=None):
         raise NotImplementedError
 
 
 class Steps(Step):
-    def __init__(self, steps: List[Step]):
-        if not steps:
-            steps = []
-
-        self.__steps: List[Step] = steps
+    def __init__(self, *args: Step):
+        self.__steps: List[Step] = [step for step in args]
 
     def add_step(self, step: Step):
         self.__steps.append(step)
@@ -34,28 +31,28 @@ class Steps(Step):
     def clear_step(self):
         self.__steps.clear()
 
-    def execute(self, prev_result=None):
+    def execute(self, _input=None):
         raise NotImplementedError
 
 
 class Group(Steps):
-    def execute(self, prev_result=None):
-        return [step.execute(prev_result) for step in self.__steps]
+    def execute(self, _input=None):
+        return [step.execute(_input) for step in self.__steps]
 
 
 class Serial(Steps):
-    def execute(self, prev_result=None):
+    def execute(self, _input=None):
         for step in self.__steps:
-            prev_result = step.execute(prev_result)
-        return prev_result
+            _input = step.execute(_input)
+        return _input
 
 
 class Adapter(Step):
-    def parse(self, prev_result=None):
+    def parse(self, _input=None):
         raise NotImplementedError
 
-    def execute(self, prev_result=None):
-        return self.parse(prev_result=prev_result)
+    def execute(self, _input=None):
+        return self.parse(_input=_input)
 
 
 class DeRequest(Step):
@@ -79,6 +76,8 @@ class DeRequest(Step):
     def on_exception(self):
         raise NotImplementedError
 
-    def execute(self, prev_result=None):
+    def execute(self, _input=None):
         pass
+
+
 
